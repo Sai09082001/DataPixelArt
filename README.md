@@ -11,6 +11,6 @@ Static No.Pix-format content snapshot for Pixel Art.
 
 Use a pinned commit, not the moving main branch:
 
-`https://cdn.jsdelivr.net/gh/Sai09082001/DataPixelArt@COMMIT/nopix/...`
+`https://cdn.jsdelivr.net/gh/Sai09082001/DataPixelArt@COMMIT/data/...`
 
-The catalog is at nopix/catalog.json. Content rights remain with their respective rights holders; this repository does not grant additional redistribution rights.
+The catalog is at data/catalog.json. Content rights remain with their respective rights holders; this repository does not grant additional redistribution rights.
