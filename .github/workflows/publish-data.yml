@@ -1,0 +1,37 @@
+name: Publish Artwork Data
+
+on:
+  push:
+    tags: ['data-v*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    if: startsWith(github.ref, 'refs/tags/data-v')
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22.22.1'
+          package-manager-cache: false
+      - name: Rebuild and verify every lossless pack
+        run: node scripts/package-release.mjs
+      - name: Publish the verified release assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: >-
+          gh release create "$RELEASE_TAG"
+          release-assets/catalog.json release-assets/catalog.sha256 release-assets/pack-*.zip
+          --verify-tag --title "Pixel Art Data $RELEASE_TAG"
+          --notes-file release-assets/notes.md
